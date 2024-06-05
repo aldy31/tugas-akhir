@@ -1,3 +1,4 @@
+
 import Identicons from "react-identicons";
 import { FaEthereum } from "react-icons/fa";
 import {
@@ -9,18 +10,19 @@ import {
 import { payoutProject } from "../services/new.block.chain";
 
 const ProjectDetailsM = ({ project }) => {
+  console.log("Project", project);
   const [connectedAccount] = useGlobalState("connectedAccount");
   const [owner] = useGlobalState("owner");
 
   const expired = new Date().getTime() > Number(project?.expiresAt + "000");
+  console.log(new Date().getTime());
+  console.log(Number(project?.expiresAt + "000"));
+  console.log(expired)
 
   return (
     <div className="pt-24 mb-5 px-6 flex justify-center">
       <div className="flex justify-center flex-col md:w-2/3">
-        <div
-          className="flex justify-start items-start
-        sm:space-x-4 flex-wrap"
-        >
+        <div className="flex justify-start items-start sm:space-x-4 flex-wrap">
           <img
             src={project?.imageURL}
             alt={project?.title}
@@ -32,14 +34,14 @@ const ProjectDetailsM = ({ project }) => {
               <h5 className="text-gray-900 text-xl font-medium mb-2">
                 {project?.title}
               </h5>
-              {project?.validated == true ? (
+              {project?.validated ? (
                 <small className="text-gray-500">
                   {expired
                     ? "Expired"
-                    : daysRemaining(project.expiresAt) + " tersisa"}
+                    : `${daysRemaining(project.expiresAt)} Tersisa`}
                 </small>
               ) : (
-                <small className="text-gray-500">{"Non Validated"}</small>
+                <small className="text-gray-500">belum divalidasi</small>
               )}
             </div>
 
@@ -50,55 +52,61 @@ const ProjectDetailsM = ({ project }) => {
                   string={project?.owner}
                   size={15}
                 />
-                {project?.owner ? (
+                {project?.owner && (
                   <small className="text-gray-700">
                     {truncate(project?.owner, 4, 4, 11)}
                   </small>
-                ) : null}
+                )}
                 <small className="text-gray-500 font-bold">
-                  {project?.backers} Pendonasi{project?.backers == 1 ? "" : ""}
+                  {project?.backers} Donatur{project?.backers !== 1 && "s"}
                 </small>
               </div>
-              {project?.validated == true ? (
+              {project?.validated ? (
                 <div className="font-bold">
                   <small className="text-green-500 m-4">Validated</small>
                   {expired ? (
                     <small className="text-red-500">Expired</small>
-                  ) : project?.status == 0 ? (
-                    <small className="text-gray-500">Open</small>
-                  ) : project?.status == 1 ? (
-                    <small className="text-green-500">Accepted</small>
-                  ) : project?.status == 2 ? (
-                    <small className="text-gray-500">Reverted</small>
-                  ) : project?.status == 3 ? (
-                    <small className="text-red-500">Deleted</small>
                   ) : (
-                    <small className="text-orange-500">Paid</small>
+                    <>
+                      {project?.status === 0 && (
+                        <small className="text-gray-500">Pending</small>
+                      )}
+                      {project?.status === 1 && (
+                        <small className="text-green-500">Open</small>
+                      )}
+                      {project?.status === 2 && (
+                        <small className="text-gray-500">Approved</small>
+                      )}
+                      {project?.status === 3 && (
+                        <small className="text-red-500">Reverted</small>
+                      )}
+                      {project?.status === 4 && (
+                        <small className="text-orange-500">Deleted</small>
+                      )}
+                      {project?.status === 5 && (
+                        <small className="text-orange-500">Paid</small>
+                      )}
+                    </>
                   )}
                 </div>
               ) : (
                 <div className="font-bold">
-                  <small className="text-red-500">Non Validated</small>
+                  <small className="text-red-500">Belum Divalidasi</small>
                 </div>
               )}
             </div>
-
-            <img
-              alt={project?.title}
-              className="rounded-xl h-44 object-cover"
-            />
-
-            <a href={project?.Syarat} target="_blank" rel="noopener noreferrer">
-              Lihat Syarat
+              <p>
+              <a href={project?.Syarat} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1 text-xl text-black text-sm font-light mt-2">
+              Lihat proposal permintaan donasi
             </a>
+
+              </p>
 
             <div>
               <p className="text-sm font-light mt-2">{project?.description}</p>
               <div className="w-full overflow-hidden bg-gray-300 mt-4">
                 <div
-                  className="bg-green-600 text-xs font-medium
-              text-green-100 text-center p-0.5 leading-none
-              rounded-l-full h-1 overflow-hidden max-w-full"
+                  className="bg-green-600 text-xs font-medium text-green-100 text-center p-0.5 leading-none rounded-l-full h-1 overflow-hidden max-w-full"
                   style={{
                     width: `${(project?.raised / project?.cost) * 100}%`,
                   }}
@@ -106,87 +114,72 @@ const ProjectDetailsM = ({ project }) => {
               </div>
 
               <div className="flex justify-between items-center font-bold mt-2">
-                <small>{project?.raised} ETH Terkumpul</small>
-                <small className="flex justify-start items-center">
+                <small>{project?.raised} $ETH Terkumpul</small>
+                <small className="flex items-center">
                   <FaEthereum />
-                  <span>{project?.cost} ETH</span>
+                  <span className="ml-1">{project?.cost} ETH</span>
                 </small>
               </div>
 
               <div className="flex justify-start items-center space-x-2 mt-4">
-                {project?.status == 0 && project?.validated == true ? (
+                {project?.status === 1 && project?.validated && (
                   <button
                     type="button"
-                    className="inline-block px-6 py-2.5 bg-green-600
-              text-white font-medium text-xs leading-tight uppercase
-              rounded-full shadow-md hover:bg-green-700"
+                    className="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-green-700"
                     onClick={() => setGlobalState("backModal", "scale-100")}
                   >
-                    Donasi Project
+                    Donasi
                   </button>
-                ) : null}
+                )}
 
-                {project?.validated == false ? (
+                {!project?.validated && (
                   <button
                     type="button"
-                    className="inline-block px-6 py-2.5 bg-green-600
-              text-white font-medium text-xs leading-tight uppercase
-              rounded-full shadow-md hover:bg-green-700"
+                    className="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-green-700"
                     onClick={() => setGlobalState("validateModal", "scale-100")}
                   >
-                    Validate Project
+                    Validasi Project
                   </button>
-                ) : null}
+                )}
 
-                {connectedAccount == project?.owner ? (
-                  project?.status != 3 ? (
-                    project?.status == 1 ? (
+                {connectedAccount === project?.owner && (
+                  <>
+                    {project?.status !== 4 ? (
+                      <>
                       <button
                         type="button"
-                        className="inline-block px-6 py-2.5 bg-orange-600
-                        text-white font-medium text-xs leading-tight uppercase
-                        rounded-full shadow-md hover:bg-orange-700"
-                        onClick={() => payoutProject(project?.id)}
+                        className="inline-block px-6 py-2.5 bg-gray-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-700"
+                        onClick={() => setGlobalState("updateModal", "scale-100")}
                       >
-                        Payout
+                        Edit
                       </button>
-                    ) : project?.status != 4 ? (
-                      <>
-                        <button
-                          type="button"
-                          className="inline-block px-6 py-2.5 bg-gray-600
-                          text-white font-medium text-xs leading-tight uppercase
-                          rounded-full shadow-md hover:bg-gray-700"
-                          onClick={() =>
-                            setGlobalState("updateModal", "scale-100")
-                          }
-                        >
-                          Edit
-                        </button>
-                        <button
-                          type="button"
-                          className="inline-block px-6 py-2.5 bg-red-600
-                          text-white font-medium text-xs leading-tight uppercase
-                          rounded-full shadow-md hover:bg-red-700"
-                          onClick={() =>
-                            setGlobalState("deleteModal", "scale-100")
-                          }
-                        >
-                          Hapus
-                        </button>
+                      <button
+                        type="button"
+                        className="inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700"
+                        onClick={() => setGlobalState("deleteModal", "scale-100")}
+                      >
+                        Delete
+                      </button>
                       </>
                     ) : (
                       <button
                         type="button"
-                        className="inline-block px-6 py-2.5 bg-gray-600
-                        text-white font-medium text-xs leading-tight uppercase
-                        rounded-full shadow-md hover:bg-gray-700"
+                        className="inline-block px-6 py-2.5 bg-gray-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-700"
                       >
                         Project Di Tutup
                       </button>
-                    )
-                  ) : null
-                ) : null}
+                    )}
+                    {/* {project?.status === 0 && (
+                      <button
+                        type="button"
+                        className="inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700"
+                        onClick={() => setGlobalState("deleteModal", "scale-100")}
+                      >
+                        Delete
+                      </button>
+                    )} */}
+                  </>
+                )}
               </div>
             </div>
           </div>

@@ -6,17 +6,11 @@ const PinataForm = () => {
   const [TTDimage, setTTDimage] = useState(null);
   const [syarat, setSyarat] = useState(null);
   const [uploadedImageCID, setUploadedImageCID] = useState(null);
-  const [uploadedTTDimage, setUploadedTTDimage] = useState(null);
   const [uploadedsyarat, setUploadedsyarat] = useState(null);
 
   const handleImageChange = (event) => {
     setImage(event.target.files[0]);
     setUploadedImageCID(null);
-  };
-
-  const handleTTDImageChange = (event) => {
-    setTTDimage(event.target.files[0]);
-    setUploadedTTDimage(null);
   };
 
   const handleSyaratChange = (event) => {
@@ -42,19 +36,6 @@ const PinataForm = () => {
           setUploadedImageCID(imageResponse.data.IpfsHash);
         }
   
-        // Upload TTDimage
-        if (TTDimage) {
-          const TTDimageFormData = new FormData();
-          TTDimageFormData.append('file', TTDimage);
-          const TTDimageResponse = await axios.post("https://api.pinata.cloud/pinning/pinFileToIPFS", TTDimageFormData, {
-            maxBodyLength: "Infinity",
-            headers: {
-              'Content-Type': `multipart/form-data;`,
-              Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIyODU3OTViZC0yNTVhLTRiZGItYTcwNi0wYWZiZGMyYWMzNDYiLCJlbWFpbCI6ImFsZGlqYXllbmczMUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJpZCI6IkZSQTEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX0seyJpZCI6Ik5ZQzEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiYjY1ZTA3NzQ0NzE0NmFlYTA2N2YiLCJzY29wZWRLZXlTZWNyZXQiOiJhMGNhNTk0MjM5MWVlYmFmNTE5OGFmZTM0MDUwYmVhNWEyZDM1N2JlOWM0MTVmYzIxNzRkNmJjZGQxMzM5OTJkIiwiaWF0IjoxNzAwNTQ1OTM2fQ.j4D0_MXTWOn9g1OAO4SPRq4hxPog-Cy_w1_Qg5r_DwA',
-            }
-          });
-          setUploadedTTDimage(TTDimageResponse.data.IpfsHash);
-        }
   
         // Upload syarat
         if (syarat) {
@@ -85,11 +66,6 @@ const PinataForm = () => {
         </label>
 
         <label className="block mb-4">
-          Select TTD Image:
-          <input type="file" onChange={handleTTDImageChange} accept="image/*" />
-        </label>
-
-        <label className="block mb-4">
           Select Zip File (Syarat):
           <input type="file" onChange={handleSyaratChange} accept=".zip" />
         </label>
@@ -108,11 +84,6 @@ const PinataForm = () => {
         </div>
       )}
 
-      {uploadedTTDimage && (
-        <div className="mt-4">
-           <h3>Gambar Tanda Tangan URL: <a href={`https://brown-advanced-parrot-707.mypinata.cloud/ipfs/${uploadedTTDimage}`} target="_blank" rel="noopener noreferrer">https://brown-advanced-parrot-707.mypinata.cloud/ipfs/{uploadedTTDimage}</a></h3>
-        </div>
-      )}
 
       {uploadedsyarat && (
         <div className="mt-4">

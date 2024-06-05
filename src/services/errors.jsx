@@ -1,13 +1,13 @@
 import { toast } from "react-toastify";
 
 const errorMessage = {
-  notfound: "Project not found",
-  alreadyvalidated: "Project is Already Validated",
-  unauthorized: "Unauthorized Entity",
-  notvalidated: "This Projected is not Validated Yet",
-  insufficientfunds: "insufficient funds",
-  userdenied: "user rejected transaction",
-  requestdenied: "User rejected the request",
+  notfound: "Project tidak ditemukan",
+  alreadyvalidated: "Project sudah di validasi",
+  unauthorized: "Entitas tidak sah",
+  notvalidated: "Project ini blum di validasi",
+  insufficientfunds: "Dana tidak cukup",
+  userdenied: "user membatalkan transaksi",
+  requestdenied: "User membatalkan request",
 };
 
 const {

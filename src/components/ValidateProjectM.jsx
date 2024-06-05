@@ -13,16 +13,33 @@ const ValidateProjectM = ({ project }) => {
     e.preventDefault();
     if ((!validationMessage, !validatorName)) return;
 
+    // const params = {
+    //   id: project?.id,
+    //   validatorName,
+    //   validationMessage,
+    // };
+
     const params = {
       id: project?.id,
-      validatorName,
       validationMessage,
     };
 
-    const bool = await validateProject(params);
-    if (bool == true) {
-      toast.success(`Project Validated by ${validatorName}! Now Can Be Backed`);
-      onClose();
+
+    // const bool = await validateProject(params);
+    // if (bool == true) {
+    //   toast.success(`Project di Validasi oleh ${validatorName}! `);
+    //   onClose();
+    // }
+
+    try {
+      const bool = await validateProject(params);
+  
+      if (bool == true) {
+        toast.success(`Project di Validasi oleh ${validatorName}! `);
+        onClose();
+      }
+    } catch (err) {
+      toast.error("Hanya Validator yang bisa melakukan aksi ini, Gagal melakukan validasi project");
     }
   };
 
@@ -48,7 +65,7 @@ const ValidateProjectM = ({ project }) => {
       >
         <form onSubmit={handleSubmit} className="flex flex-col">
           <div className="flex justify-between items-center">
-            <p className="font-semibold">Validate Project</p>
+            <p className="font-semibold">Validasi Project</p>
             <button
               onClick={onClose}
               type="button"
@@ -67,7 +84,7 @@ const ValidateProjectM = ({ project }) => {
             focus:ring-0"
               type="text"
               name="name"
-              placeholder="Validator Name"
+              placeholder="nama validator"
               onChange={(e) => setValidatorName(e.target.value)}
               value={validatorName}
               required
@@ -83,7 +100,7 @@ const ValidateProjectM = ({ project }) => {
             focus:ring-0"
               type="text"
               name="message"
-              placeholder="Validation Message"
+              placeholder="Pesan validator"
               onChange={(e) => setValidationMessage(e.target.value)}
               value={validationMessage}
               required
@@ -96,7 +113,7 @@ const ValidateProjectM = ({ project }) => {
             text-white font-medium text-md leading-tight
             rounded-full shadow-md hover:bg-blue-700 mt-5"
           >
-            Validate Project
+            Validasi Project
           </button>
         </form>
       </div>

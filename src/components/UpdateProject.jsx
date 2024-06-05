@@ -10,7 +10,6 @@ const UpdateProject = ({ project }) => {
   const [description, setDescription] = useState(project?.description);
   const [date, setDate] = useState(project?.date);
   const [imageURL, setImageURL] = useState(project?.imageURL);
-  const [TtdURL, setTtdURL] = useState(project?.TtdURL);
   const [Syarat, setSyarat] = useState(project?.Syarat);
 
   const toTimestamp = (dateStr) => {
@@ -20,7 +19,7 @@ const UpdateProject = ({ project }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title || !description || !date || !imageURL || !TtdURL || !Syarat)
+    if (!title || !description || !date || !imageURL || !Syarat)
       return;
 
     const params = {
@@ -29,12 +28,11 @@ const UpdateProject = ({ project }) => {
       description,
       expiresAt: toTimestamp(date),
       imageURL,
-      TtdURL,
       Syarat,
     };
 
     await updateProject(params);
-    toast.success("Projek berhasil di update");
+    toast.success("Projek berhasil di update, akan terlihat dalam 30 detik!");
     onClose();
   };
 
@@ -64,9 +62,9 @@ const UpdateProject = ({ project }) => {
             </button>
           </div>
 
-          <div className="flex justify-center items-center mt-5">
+          {/* <div className="flex justify-center items-center mt-5">
             <div className="rounded-xl overflow-hidden h-20 w-20"></div>
-          </div>
+          </div> */}
 
           <div
             className="flex justify-between items-center
@@ -119,23 +117,7 @@ const UpdateProject = ({ project }) => {
             />
           </div>
 
-          <div
-            className="flex justify-between items-center
-          bg-gray-300 rounded-xl mt-5"
-          >
-            <input
-              className="block w-full bg-transparent
-            border-0 text-sm text-slate-500 focus:outline-none
-            focus:ring-0"
-              type="url"
-              name="imageURL"
-              placeholder="Image URL"
-              onChange={(e) => setTtdURL(e.target.value)}
-              value={TtdURL}
-              required
-            />
-          </div>
-
+          
           <div
             className="flex justify-between items-center
           bg-gray-300 rounded-xl mt-5"

@@ -34,7 +34,7 @@ const CreateProject = () => {
 
     const bool = await createProject(params);
     if (bool == true) {
-      toast.success("Project Berhasil Dibuat");
+      toast.success("Project Berhasil Dibuat, akan terlihat dalam 30 detik!");
       onClose();
     }
   };
@@ -65,7 +65,7 @@ const CreateProject = () => {
       >
         <form onSubmit={handleSubmit} className="flex flex-col">
           <div className="flex justify-between items-center">
-            <p className="font-semibold">Buat Project</p>
+            <p className="font-semibold">Buka Donasi</p>
             <button
               onClick={onClose}
               type="button"
@@ -85,7 +85,7 @@ const CreateProject = () => {
             focus:ring-0"
               type="text"
               name="title"
-              placeholder="Title"
+              placeholder="Judul (Nama)"
               onChange={(e) => setTitle(e.target.value)}
               value={title}
               required
@@ -104,7 +104,7 @@ const CreateProject = () => {
               step={0.01}
               min={0.01}
               name="cost"
-              placeholder="cost (ETH)"
+              placeholder="Dana yang dibutuhkan ($ETH)"
               onChange={(e) => setCost(e.target.value)}
               value={cost}
               required
@@ -121,7 +121,7 @@ const CreateProject = () => {
             focus:ring-0"
               type="date"
               name="date"
-              placeholder="Expires"
+              placeholder="Expires" 
               onChange={(e) => setDate(e.target.value)}
               value={date}
               required
@@ -138,7 +138,7 @@ const CreateProject = () => {
             focus:ring-0"
               type="url"
               name="imageURL"
-              placeholder="Image URL"
+              placeholder="URL Gambar"
               onChange={(e) => setImageURL(e.target.value)}
               value={imageURL}
               required
@@ -155,7 +155,7 @@ const CreateProject = () => {
             focus:ring-0"
               type="url"
               name="Syarat"
-              placeholder=" Syarat URL"
+              placeholder="URL Proposal"
               onChange={(e) => setSyarat(e.target.value)}
               value={Syarat}
               required
@@ -172,7 +172,7 @@ const CreateProject = () => {
             focus:ring-0"
               type="text"
               name="description"
-              placeholder="Description"
+              placeholder="Deskripsi"
               onChange={(e) => setDescription(e.target.value)}
               value={description}
               required
@@ -185,7 +185,7 @@ const CreateProject = () => {
             text-white font-medium text-md leading-tight
             rounded-full shadow-md hover:bg-blue-700 mt-5"
           >
-            Submit Project
+            Submit
           </button>
         </form>
       </div>

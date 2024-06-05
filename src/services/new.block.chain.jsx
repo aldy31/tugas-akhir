@@ -60,9 +60,8 @@ const createProject = async ({
   try {
     const signer_provider = await connectWallet();
     const { signer } = signer_provider;
-    await signer.signMessage(creating);
     const contracts = await getEtheriumContract();
-    const { signed_contract } = contracts;
+    const signed_contract = contracts.contract.connect(signer);
     cost = ethers.utils.parseEther(cost);
 
     tx = await signed_contract.createProject(
@@ -81,7 +80,29 @@ const createProject = async ({
   }
 };
 
-const validateProject = async ({ id, validatorName, validationMessage }) => {
+const RegisterValidator = async ({
+  validatorAddress,
+  validatorName,
+}) => {
+  try {
+    const signer_provider = await connectWallet();
+    const { signer } = signer_provider;
+    const contracts = await getEtheriumContract();
+    const signed_contract = contracts.contract.connect(signer);
+
+    tx = await signed_contract.registerValidator(
+      validatorAddress,
+      validatorName
+    );
+    await tx.wait();
+    return true;
+  } catch (error) {
+    const errMsg = error.message;
+    errormessage(errMsg);
+  }
+};
+
+const validateProject = async ({ id, validationMessage }) => {
   try {
     if (!ethereum) return alert("Please install Metamask");
 
@@ -94,15 +115,14 @@ const validateProject = async ({ id, validatorName, validationMessage }) => {
 
     tx = await signed_contract.validateProject(
       id,
-      validatorName,
       validationMessage
     );
     await tx.wait();
     await loadProject(id);
     return true;
   } catch (error) {
-    const errMsg = error.message;
-    errormessage(errMsg);
+    console.error('Error validating project', error)
+    throw error;
   }
 };
 
@@ -119,9 +139,8 @@ const updateProject = async ({
 
     const signer_provider = await connectWallet();
     const { signer } = signer_provider;
-    await signer.signMessage(updating);
     const contracts = await getEtheriumContract();
-    const { signed_contract } = contracts;
+    const signed_contract = contracts.contract.connect(signer);
     tx = await signed_contract.updateProject(
       id,
       title,
@@ -143,9 +162,8 @@ const deleteProject = async (id) => {
     if (!ethereum) return alert("Please install Metamask");
     const signer_provider = await connectWallet();
     const { signer } = signer_provider;
-    await signer.signMessage(deleting);
     const contracts = await getEtheriumContract();
-    const { signed_contract } = contracts;
+    const signed_contract = contracts.contract.connect(signer);
     await signed_contract.deleteProject(id);
     return true;
   } catch (error) {
@@ -194,10 +212,9 @@ const backProject = async (id, amount) => {
     const connectedAccount = getGlobalState("connectedAccount");
     const signer_provider = await connectWallet();
     const { signer } = signer_provider;
-    await signer.signMessage(backing);
     const contracts = await getEtheriumContract();
 
-    const { signed_contract } = contracts;
+    const signed_contract = contracts.contract.connect(signer);
 
     amount = ethers.utils.parseEther(amount);
 
@@ -237,11 +254,10 @@ const payoutProject = async (id) => {
     const connectedAccount = getGlobalState("connectedAccount");
     const signer_provider = await connectWallet();
     const { signer } = signer_provider;
-    await signer.signMessage(payout);
 
     const contracts = await getEtheriumContract();
 
-    const { signed_contract } = contracts;
+    const signed_contract = contracts.contract.connect(signer);
 
     tx = await signed_contract.payOutProject(id, {
       from: connectedAccount,
@@ -285,6 +301,7 @@ const structuredProjects = (projects) =>
       validatorAddress: project.validatorAddress,
       validatorName: project.validatorName,
       validationMessage: project.validationMessage,
+      validatorAddress: project.validatorAddress
     }))
     .reverse();
 
@@ -299,8 +316,8 @@ const toDate = (timestamp) => {
 
 const structureStats = (stats) => ({
   totalProjects: stats.totalProjects.toNumber(),
-  validedProjects: stats.validedProjects.toNumber(),
-  nonValidateProjects: stats.nonValidateProjects.toNumber(),
+  validedProjects: stats.validatedProjects.toNumber(),
+  nonValidateProjects: stats.nonValidatedProjects.toNumber(),
   totalBacking: stats.totalBacking.toNumber(),
   totalDonations: parseInt(stats.totalDonations._hex) / 10 ** 18,
 });
@@ -314,6 +331,7 @@ export {
   connectWallet,
   isWallectConnected,
   createProject,
+  RegisterValidator,
   updateProject,
   deleteProject,
   loadProjects,

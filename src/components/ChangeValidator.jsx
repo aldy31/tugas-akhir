@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
-// import { changeValidator } from "../services/new.block.chain";
+import { RegisterValidator } from "../services/new.block.chain";
 import { useGlobalState, setGlobalState } from "../store";
 
 const ChangeValidator = () => {
   const [changeValidatorModal] = useGlobalState("changeValidatorModal");
-  //   const validatorName = useGlobalState("validatorName");
+    // const validatorName = useGlobalState("validatorName");
   const [validatorAddress, setValidatorAddress] = useState("");
   const [validatorName, setValidatorName] = useState("");
 
@@ -19,9 +19,9 @@ const ChangeValidator = () => {
       validatorName,
     };
 
-    const bool = await changeValidator(params);
+    const bool = await RegisterValidator(params);
     if (bool == true) {
-      toast.success(`Validator Changed! ${validatorName} is New Validator`);
+      toast.success(`Validator terdaftar! ${validatorName} adalah validator`);
       onClose();
     }
   };
@@ -48,7 +48,7 @@ const ChangeValidator = () => {
       >
         <form onSubmit={handleSubmit} className="flex flex-col">
           <div className="flex justify-between items-center">
-            <p className="font-semibold">Change Validator</p>
+            <p className="font-semibold">Register Validator</p>
             <button
               onClick={onClose}
               type="button"
@@ -83,7 +83,7 @@ const ChangeValidator = () => {
             focus:ring-0"
               type="text"
               name="address"
-              placeholder="Validator Address"
+              placeholder="masukan adress yang sama dengan adress akun metamask anda!"
               onChange={(e) => setValidatorAddress(e.target.value)}
               value={validatorAddress}
               required
@@ -95,7 +95,7 @@ const ChangeValidator = () => {
             text-white font-medium text-md leading-tight
             rounded-full shadow-md hover:bg-blue-700 mt-5"
           >
-            Change Validator
+            Register Validator
           </button>
         </form>
       </div>

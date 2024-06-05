@@ -5,15 +5,21 @@ import { deleteProject } from "../services/new.block.chain";
 import { useGlobalState, setGlobalState } from "../store";
 
 const DeleteProject = ({ project }) => {
-  const [deleteModal] = useGlobalState("deleteModal");
+  const deleteModal = useGlobalState("deleteModal")[0];
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    const bool = await deleteProject(project?.id);
-    if (bool == true) {
-      toast.success("Proyek berhasil dihapus, akan terlihat dalam 30 detik.");
-      setGlobalState("deleteModal", "scale-0");
-      navigate.push("/");
+    try {
+      const bool = await deleteProject(project?.id);
+      if (bool) {
+        toast.success("Proyek berhasil dihapus, akan terlihat dalam 30 detik.");
+        setGlobalState("deleteModal", "scale-0");
+        navigate("/");
+      } else {
+        toast.error("Gagal menghapus proyek.");
+      }
+    } catch (error) {
+      toast.error("Terjadi kesalahan. Silakan coba lagi.");
     }
   };
 

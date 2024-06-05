@@ -5,11 +5,6 @@
 				"internalType": "uint256",
 				"name": "_projectTax",
 				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_validatorName",
-				"type": "string"
 			}
 		],
 		"stateMutability": "nonpayable",
@@ -74,24 +69,6 @@
 			}
 		],
 		"name": "changeTax",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_newValidator",
-				"type": "address"
-			},
-			{
-				"internalType": "string",
-				"name": "_validatorName",
-				"type": "string"
-			}
-		],
-		"name": "changeValidator",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -175,6 +152,24 @@
 				"type": "bool"
 			}
 		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_validator",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"name": "registerValidator",
+		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -400,6 +395,16 @@
 						"internalType": "string",
 						"name": "validationMessage",
 						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "validatorAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "validatorName",
+						"type": "string"
 					}
 				],
 				"internalType": "struct Genesis.projectStruct",
@@ -484,6 +489,16 @@
 					{
 						"internalType": "string",
 						"name": "validationMessage",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "validatorAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "validatorName",
 						"type": "string"
 					}
 				],
@@ -574,12 +589,12 @@
 			},
 			{
 				"internalType": "uint256",
-				"name": "validedProjects",
+				"name": "validatedProjects",
 				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",
-				"name": "nonValidateProjects",
+				"name": "nonValidatedProjects",
 				"type": "uint256"
 			}
 		],
@@ -587,26 +602,38 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "validator",
-		"outputs": [
+		"inputs": [
 			{
 				"internalType": "address",
 				"name": "",
 				"type": "address"
 			}
 		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "validatorName",
+		"name": "validatorNames",
 		"outputs": [
 			{
 				"internalType": "string",
 				"name": "",
 				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "validators",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",

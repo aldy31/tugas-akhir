@@ -1,2 +1,5 @@
+Step 1 : npm i
 
-# Diveinprogramming-crowdfunding-no-validator-main
+Step 2 : npm start
+
+

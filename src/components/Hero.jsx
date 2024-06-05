@@ -16,7 +16,7 @@ const Hero = () => {
           >
             {stats?.totalProjects || 0}
           </span>
-          <span>Projects</span>
+          <span>Project</span>
         </div>
         <div
           className="flex flex-col justify-center items-center
@@ -28,7 +28,7 @@ const Hero = () => {
           >
             {stats?.validedProjects || 0}
           </span>
-          <span>Validated Projects</span>
+          <span>Project Tervalidasi</span>
         </div>
         <div
           className="flex flex-col justify-center items-center
@@ -40,7 +40,7 @@ const Hero = () => {
           >
             {stats?.nonValidateProjects || 0}
           </span>
-          <span>NonValidated Projects</span>
+          <span>Project Blum di Validasi</span>
         </div>
         <div
           className="flex flex-col justify-center items-center
@@ -52,7 +52,7 @@ const Hero = () => {
           >
             {stats?.totalBacking || 0}
           </span>
-          <span>Dukungan/Donasi</span>
+          <span>Donatur</span>
         </div>
         <div
           className="flex flex-col justify-center items-center

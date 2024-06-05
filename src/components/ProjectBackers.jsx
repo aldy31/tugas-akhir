@@ -18,7 +18,7 @@ const ProjectBackers = ({ backers }) => {
                 className="text-sm font-medium
                 px-6 py-4 text-left"
               >
-                Pendonasi
+                Donatur
               </th>
               <th
                 scope="col"

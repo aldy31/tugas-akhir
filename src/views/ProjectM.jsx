@@ -18,6 +18,7 @@ const ProjectM = () => {
   const [backers] = useGlobalState("backers");
 
   useEffect(async () => {
+    console.log("Project",project);
     await loadProject(id);
     await getBackers(id);
     setLoaded(true);
