@@ -395,16 +395,6 @@
 						"internalType": "string",
 						"name": "validationMessage",
 						"type": "string"
-					},
-					{
-						"internalType": "address",
-						"name": "validatorAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "string",
-						"name": "validatorName",
-						"type": "string"
 					}
 				],
 				"internalType": "struct Genesis.projectStruct",
@@ -489,16 +479,6 @@
 					{
 						"internalType": "string",
 						"name": "validationMessage",
-						"type": "string"
-					},
-					{
-						"internalType": "address",
-						"name": "validatorAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "string",
-						"name": "validatorName",
 						"type": "string"
 					}
 				],

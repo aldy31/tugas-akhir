@@ -25,7 +25,7 @@ const Header = () => {
           <span>Buka Donasi</span>
         </Link>
 
-        <Link to="/pinataForm" className="flex items-center space-x-1 text-xl text-black">
+        <Link to="/pinataForm" className="flex items-center space-x-1 text-xl text-black" target="_blank">
           <span>Buat Link</span>
         </Link>
       </nav>
