@@ -654,11 +654,11 @@
 	},
 	"sources": {
 		"src/contracts/NewGenesisMaster.sol": {
-			"keccak256": "0x8918adafab5a1f9bf0de8fc6124435eeab0af70264068ab60063d140384a923e",
+			"keccak256": "0xe9fd7c93d8cbb4d65e08d00198f1aef2aa577ea381108fc4dea2dc364021a8b7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1d88eac476073433bd4a35bc579892a8b98cc5666bf8f7f78ce732dc403453f8",
-				"dweb:/ipfs/QmNRKxn7zT21GFS2h9nP5K9s95iRRPD8HKQaipQeM4Ccwo"
+				"bzz-raw://80357b9bfc0f089daaac729e9984a349e1d359964bb515f5e867207ce73b8d12",
+				"dweb:/ipfs/QmbuNZgfYZJKoTWb4Qn6XC9m2t9KE2JoGx9U6AtoJT2mNY"
 			]
 		}
 	},

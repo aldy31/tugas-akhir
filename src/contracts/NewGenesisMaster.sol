@@ -218,7 +218,7 @@ contract Genesis {
             "This Projected is not Validated Yet"
         );
         require(
-            projects[id].status != statusEnum.OPEN,
+            projects[id].status == statusEnum.OPEN,
             "Project no longer opened"
         );
 

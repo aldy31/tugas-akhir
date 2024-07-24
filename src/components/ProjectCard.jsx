@@ -124,7 +124,7 @@ const ProjectCard = ({ project }) => {
         </p>
  
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-        Alamat Validator :{truncate(validatorAddress, 4, 4, 11)}
+        Alamat Validator :{validatorAddress}
         </p>
 
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
